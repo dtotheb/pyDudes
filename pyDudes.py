@@ -39,6 +39,19 @@ dude = Dude()
 dude.rect.center = (MAXWIDTH / 2, MAXHEIGHT / 2)
 allsprites.add(dude)
 
+bullets = pygame.sprite.Group()
+
+
+def checkBullets():
+    for bullet in bullets:
+        if bullet.rect.y <= 0:
+            bullets.remove(bullet)
+
+
+def fire():
+    bullet = dude.shoot()
+    bullets.add(bullet)
+
 
 #run the game loop
 while True:
@@ -61,12 +74,15 @@ while True:
             elif event.key == pygame.K_DOWN:
                 dude.moving = 'down'
             elif event.key == pygame.K_SPACE:
-                bullet = dude.shoot()
-                allsprites.add(bullet)
+                fire()
         elif event.type == pygame.KEYUP:
             dude.moving = False
 
+    bullets.update()
     allsprites.update()
+    checkBullets()
+
     screen.blit(background, (0, 0))
     allsprites.draw(screen)
+    bullets.draw(screen)
     pygame.display.flip()
