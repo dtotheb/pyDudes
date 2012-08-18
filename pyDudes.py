@@ -49,16 +49,19 @@ while True:
             pygame.quit()
             sys.exit()
 
-        # Check for a key push by the user
+        # Check for arrow keys being pushed
+        # and set the Dude's moving direction
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
-                dude.rect.move_ip(25, 0)
+                dude.moving = 'right'
             elif event.key == pygame.K_LEFT:
-                dude.rect.move_ip(-25, 0)
+                dude.moving = 'left'
             elif event.key == pygame.K_UP:
-                dude.rect.move_ip(0, -25)
+                dude.moving = 'up'
             elif event.key == pygame.K_DOWN:
-                dude.rect.move_ip(0, 25)
+                dude.moving = 'down'
+        elif event.type == pygame.KEYUP:
+            dude.moving = False
 
     allsprites.update()
     screen.blit(background, (0, 0))
