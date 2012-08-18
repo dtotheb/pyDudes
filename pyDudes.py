@@ -60,6 +60,9 @@ while True:
                 dude.moving = 'up'
             elif event.key == pygame.K_DOWN:
                 dude.moving = 'down'
+            elif event.key == pygame.K_SPACE:
+                bullet = dude.shoot()
+                allsprites.add(bullet)
         elif event.type == pygame.KEYUP:
             dude.moving = False
 

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from helpers import *
 import pygame
+from Bullet import Bullet
 from pygame.locals import *
 
 
@@ -21,6 +22,14 @@ class Dude(pygame.sprite.DirtySprite):
             self.rect.move_ip(0, -speed)
         if self.moving == 'down':
             self.rect.move_ip(0, speed)
+
+
+    #fire a bullet up
+    def shoot(self):
+        bullet = Bullet()
+        bullet.rect.center = self.rect.center
+        bullet.speed = 5
+        return bullet
 
     def update(self):
         self.dirty = 1
