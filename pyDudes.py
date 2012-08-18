@@ -3,6 +3,7 @@ import sys
 import pygame
 from pygame.locals import *
 from helpers import *
+from Dude import Dude
 
 #setup pygame
 pygame.init()
@@ -24,12 +25,19 @@ screen.blit(background, (0, 0))
 pygame.display.flip()
 
 
+
+
 #setup the sprites/clock
 allsprites = pygame.sprite.LayeredDirty()
 rects = allsprites.draw(screen)
 pygame.display.update(rects)
 clock = pygame.time.Clock()
 pygame.mouse.set_visible(True)
+
+#setup the Dude
+dude = Dude()
+dude.rect.center = (MAXWIDTH / 2, MAXHEIGHT / 2)
+allsprites.add(dude)
 
 
 #run the game loop
