@@ -48,10 +48,17 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-        #check if the ball is clicked on
-        elif event.type == MOUSEBUTTONDOWN:
-            pos = pygame.mouse.get_pos()
 
+        # Check for a key push by the user
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                dude.rect.move_ip(25, 0)
+            elif event.key == pygame.K_LEFT:
+                dude.rect.move_ip(-25, 0)
+            elif event.key == pygame.K_UP:
+                dude.rect.move_ip(0, -25)
+            elif event.key == pygame.K_DOWN:
+                dude.rect.move_ip(0, 25)
 
     allsprites.update()
     screen.blit(background, (0, 0))
