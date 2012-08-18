@@ -42,12 +42,6 @@ allsprites.add(dude)
 bullets = pygame.sprite.Group()
 
 
-def checkBullets():
-    for bullet in bullets:
-        if bullet.rect.y <= 0:
-            bullets.remove(bullet)
-
-
 def fire():
     bullet = dude.shoot()
     bullets.add(bullet)
@@ -80,7 +74,6 @@ while True:
 
     bullets.update()
     allsprites.update()
-    checkBullets()
 
     screen.blit(background, (0, 0))
     allsprites.draw(screen)

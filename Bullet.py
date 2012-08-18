@@ -13,8 +13,9 @@ class Bullet(pygame.sprite.DirtySprite):
 
     def move(self):
         self.rect.move_ip(0, -self.speed)
+        if self.rect.y <= 0:
+            self.kill()
 
     def update(self):
         self.dirty = 1
         self.move()
-
