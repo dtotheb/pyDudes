@@ -39,13 +39,22 @@ dude = Dude()
 dude.rect.center = (MAXWIDTH / 2, MAXHEIGHT / 2)
 allsprites.add(dude)
 
-bullets = pygame.sprite.Group()
+
+#setup some dudes to shoot at
+baddudes = pygame.sprite.Group()
+for n in range(1, 5):
+    baddy = Dude()
+    baddy.rect.center = (MAXWIDTH / 5 * n, 20)
+    baddudes.add(baddy)
+
+allsprites.add(baddudes)
 
 
 def fire():
     bullet = dude.shoot()
     bullets.add(bullet)
 
+bullets = pygame.sprite.Group()
 
 #run the game loop
 while True:
@@ -74,6 +83,8 @@ while True:
 
     bullets.update()
     allsprites.update()
+
+    pygame.sprite.groupcollide(bullets,baddudes, True, True)
 
     screen.blit(background, (0, 0))
     allsprites.draw(screen)
