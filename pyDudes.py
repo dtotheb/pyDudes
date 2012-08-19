@@ -25,11 +25,12 @@ background.fill((250, 250, 250))
 screen.blit(background, (0, 0))
 pygame.display.flip()
 
-
-#setup the sprites/clock
+#setup the sprite groups
+bullets = pygame.sprite.Group()
+aliens = pygame.sprite.Group()
 allsprites = pygame.sprite.LayeredDirty()
-rects = allsprites.draw(screen)
-pygame.display.update(rects)
+
+#setup the clock
 clock = pygame.time.Clock()
 pygame.mouse.set_visible(True)
 
@@ -38,24 +39,36 @@ dude = Dude()
 dude.rect.center = (MAXWIDTH / 2, MAXHEIGHT / 2)
 allsprites.add(dude)
 
-#points
-points = 0
+#SCORE
+SCORE = 0
 
-#setup some Aiens to shoot at
-aliens = pygame.sprite.Group()
+#setup some Aliens to shoot at
 for n in range(1, 5):
     alien = Alien(5)
     alien.rect.center = (MAXWIDTH / 5 * n, 50)
     aliens.add(alien)
-
 allsprites.add(aliens)
 
 
+#handle firing the bullets
 def fire():
     bullet = dude.shoot()
     bullets.add(bullet)
 
-bullets = pygame.sprite.Group()
+
+#check if any aliens are hit by a bullet, and return the earned points
+def checkBullets():
+    bullethits = pygame.sprite.groupcollide(bullets, aliens, True, False)
+    points = 0
+    if bullethits:
+        for bullet, hits in bullethits.items():
+            for alien in hits:
+                alien.hitpoints -= bullet.damage
+                if alien.hitpoints <= 0:
+                    points += alien.points
+                    alien.kill()
+    return points
+
 
 #run the game loop
 while True:
@@ -82,20 +95,17 @@ while True:
         elif event.type == pygame.KEYUP:
             dude.moving = False
 
+    #update the sprites & bullets
     bullets.update()
     allsprites.update()
 
-    #check if any aliens are hit by a bullet, and update points
-    bullethits = pygame.sprite.groupcollide(bullets, aliens, True, False)
-    if bullethits:
-        for bullet, hits in bullethits.items():
-            for alien in hits:
-                alien.hitpoints -= bullet.damage
-                if alien.hitpoints <= 0:
-                    points += alien.points
-                    alien.kill()
-        print 'points:', points
+    #check for bullet collisions and update points
+    points = checkBullets()
+    if points:
+        SCORE += points
+        print 'score: ', SCORE
 
+    #draw everything on the screen
     screen.blit(background, (0, 0))
     allsprites.draw(screen)
     bullets.draw(screen)
