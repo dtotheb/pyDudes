@@ -40,11 +40,13 @@ dude = Dude()
 dude.rect.center = (MAXWIDTH / 2, MAXHEIGHT / 2)
 allsprites.add(dude)
 
+#points
+points = 0
 
 #setup some Aiens to shoot at
 aliens = pygame.sprite.Group()
 for n in range(1, 5):
-    alien = Alien()
+    alien = Alien(5)
     alien.rect.center = (MAXWIDTH / 5 * n, 50)
     aliens.add(alien)
 
@@ -85,7 +87,17 @@ while True:
     bullets.update()
     allsprites.update()
 
-    pygame.sprite.groupcollide(bullets,aliens, True, True)
+
+    #check if any aliens are hit by a bullet, and update points
+    hits = pygame.sprite.groupcollide(bullets, aliens, True, False)
+    if hits:
+        for bullet,dead in hits.items():
+            for alien in dead:
+                points += alien.points
+                alien.kill()
+        print 'points:', points
+
+
 
     screen.blit(background, (0, 0))
     allsprites.draw(screen)
