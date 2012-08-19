@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 from helpers import *
 from Dude import Dude
+from Alien import Alien
 
 #setup pygame
 pygame.init()
@@ -40,14 +41,14 @@ dude.rect.center = (MAXWIDTH / 2, MAXHEIGHT / 2)
 allsprites.add(dude)
 
 
-#setup some dudes to shoot at
-baddudes = pygame.sprite.Group()
+#setup some Aiens to shoot at
+aliens = pygame.sprite.Group()
 for n in range(1, 5):
-    baddy = Dude()
-    baddy.rect.center = (MAXWIDTH / 5 * n, 20)
-    baddudes.add(baddy)
+    alien = Alien()
+    alien.rect.center = (MAXWIDTH / 5 * n, 50)
+    aliens.add(alien)
 
-allsprites.add(baddudes)
+allsprites.add(aliens)
 
 
 def fire():
@@ -84,7 +85,7 @@ while True:
     bullets.update()
     allsprites.update()
 
-    pygame.sprite.groupcollide(bullets,baddudes, True, True)
+    pygame.sprite.groupcollide(bullets,aliens, True, True)
 
     screen.blit(background, (0, 0))
     allsprites.draw(screen)
