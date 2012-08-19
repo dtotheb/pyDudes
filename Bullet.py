@@ -10,6 +10,7 @@ class Bullet(pygame.sprite.DirtySprite):
         pygame.sprite.DirtySprite.__init__(self)
         self.image, self.rect = load_image('bullet.bmp')
         self.speed = 0
+        self.damage = 1
 
     def move(self):
         self.rect.move_ip(0, -self.speed)

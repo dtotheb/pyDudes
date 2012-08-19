@@ -26,8 +26,6 @@ screen.blit(background, (0, 0))
 pygame.display.flip()
 
 
-
-
 #setup the sprites/clock
 allsprites = pygame.sprite.LayeredDirty()
 rects = allsprites.draw(screen)
@@ -87,19 +85,16 @@ while True:
     bullets.update()
     allsprites.update()
 
-
     #check if any aliens are hit by a bullet, and update points
-    hits = pygame.sprite.groupcollide(bullets, aliens, True, False)
-    if hits:
-        for bullet,dead in hits.items():
-            for alien in dead:
-                alien.hitpoints -= 1
+    bullethits = pygame.sprite.groupcollide(bullets, aliens, True, False)
+    if bullethits:
+        for bullet, hits in bullethits.items():
+            for alien in hits:
+                alien.hitpoints -= bullet.damage
                 if alien.hitpoints <= 0:
                     points += alien.points
                     alien.kill()
         print 'points:', points
-
-
 
     screen.blit(background, (0, 0))
     allsprites.draw(screen)
