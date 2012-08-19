@@ -10,6 +10,7 @@ class Alien(pygame.sprite.DirtySprite):
         pygame.sprite.DirtySprite.__init__(self)
         self.image, self.rect = load_image('alien.bmp')
         self.moving = False
+        self.hitpoints = 2
         self.points = points
 
     def update(self):

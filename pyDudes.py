@@ -93,8 +93,10 @@ while True:
     if hits:
         for bullet,dead in hits.items():
             for alien in dead:
-                points += alien.points
-                alien.kill()
+                alien.hitpoints -= 1
+                if alien.hitpoints <= 0:
+                    points += alien.points
+                    alien.kill()
         print 'points:', points
 
 
