@@ -23,7 +23,6 @@ class Dude(pygame.sprite.DirtySprite):
         if self.moving == 'down':
             self.rect.move_ip(0, speed)
 
-
     #fire a bullet up
     def shoot(self):
         bullet = Bullet()

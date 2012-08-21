@@ -5,6 +5,7 @@ from pygame.locals import *
 from helpers import *
 from Dude import Dude
 from Alien import Alien
+from Score import Score
 
 #setup pygame
 pygame.init()
@@ -21,6 +22,10 @@ background = pygame.Surface(screen.get_size())
 background = background.convert()
 background.fill((250, 250, 250))
 
+#SCORE
+SCORE = 0
+scoreSprite = Score((MAXWIDTH - 100, MAXHEIGHT - 25))
+
 #Draw Everything
 screen.blit(background, (0, 0))
 pygame.display.flip()
@@ -29,6 +34,9 @@ pygame.display.flip()
 bullets = pygame.sprite.Group()
 aliens = pygame.sprite.Group()
 allsprites = pygame.sprite.LayeredDirty()
+guisprites = pygame.sprite.Group()
+
+guisprites.add(scoreSprite)
 
 #setup the clock
 clock = pygame.time.Clock()
@@ -38,9 +46,6 @@ pygame.mouse.set_visible(True)
 dude = Dude()
 dude.rect.center = (MAXWIDTH / 2, MAXHEIGHT / 2)
 allsprites.add(dude)
-
-#SCORE
-SCORE = 0
 
 #setup some Aliens to shoot at
 for n in range(1, 5):
@@ -104,9 +109,14 @@ while True:
     if points:
         SCORE += points
         print 'score: ', SCORE
+        scoreSprite.score = SCORE
+        guisprites.update()
+
+
 
     #draw everything on the screen
     screen.blit(background, (0, 0))
     allsprites.draw(screen)
     bullets.draw(screen)
+    guisprites.draw(screen)
     pygame.display.flip()
