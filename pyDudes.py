@@ -48,11 +48,22 @@ dude.rect.center = (MAXWIDTH / 2, MAXHEIGHT / 2)
 allsprites.add(dude)
 
 #setup some Aliens to shoot at
-for n in range(1, 5):
-    alien = Alien(5)
-    alien.rect.center = (MAXWIDTH / 5 * n, 50)
-    aliens.add(alien)
+rows = 2
+cols = 8
+points = 5
+for a in range(0, rows):
+    for n in range(1, cols):
+        alien = Alien(points)
+        alien.rect.center = (MAXWIDTH / cols * n, (a * 75) + 30)
+        alien.vector = (1, 0)
+        aliens.add(alien)
 allsprites.add(aliens)
+
+
+def WrapAround(Aliens):
+    for a in Aliens:
+        if a.rect.x >= MAXWIDTH + 25:
+            a.rect.x = -25
 
 
 #handle firing the bullets
@@ -112,7 +123,7 @@ while True:
         scoreSprite.score = SCORE
         guisprites.update()
 
-
+    WrapAround(aliens)
 
     #draw everything on the screen
     screen.blit(background, (0, 0))

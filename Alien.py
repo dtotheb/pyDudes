@@ -12,6 +12,8 @@ class Alien(pygame.sprite.DirtySprite):
         self.moving = False
         self.hitpoints = 2
         self.points = points
+        self.vector = (0, 0)
 
     def update(self):
         self.dirty = 1
+        self.rect.move_ip(self.vector)
